@@ -1,0 +1,31 @@
+package com.daon.search_map_part4_03.response.search
+
+data class Poi(
+    val id: String,
+    val name: String?,
+    val telNo: String,
+    val frontLat: Float,
+    val fontLon: Float,
+    val noorLat: Float,
+    val noorLon: Float,
+    val upperAddrName: String?,
+    val middleAddrName: String?,
+    val lowerAddrName: String?,
+    val detailAddrName: String?,
+    val firstNo: String?,
+    val secondNo: String?,
+    val roadName: String,
+    val firstBuildNo: String,
+    val secondBuildNo: String,
+    val mlClass: String,
+    val radius: String,
+    val bizName: String,
+    val upperBizName: String,
+    val middleBizName: String,
+    val lowerBizName: String,
+    val detailBizName: String,
+    val rpFlag: String,
+    val parkFlag: String,
+    val detailInfoFlag: String,
+    val desc: String
+)
