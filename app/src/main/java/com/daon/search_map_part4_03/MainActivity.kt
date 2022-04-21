@@ -8,8 +8,16 @@ import com.daon.search_map_part4_03.adapter.SearchRecyclerAdapter
 import com.daon.search_map_part4_03.databinding.ActivityMainBinding
 import com.daon.search_map_part4_03.model.LocationLatLngEntity
 import com.daon.search_map_part4_03.model.SearchResultEntity
+import com.daon.search_map_part4_03.utility.RetrofitUtil
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
+
+    private lateinit var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: SearchRecyclerAdapter
@@ -19,8 +27,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        job = Job()
+
         initAdapter()
         initViews()
+        bindViews()
         initData()
         setData()
     }
@@ -28,6 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() = with(binding) {
         emptyResultTextView.isVisible = false
         recyclerView.adapter
+    }
+
+    private fun bindViews() = with(binding) {
+        searchButton.setOnClickListener {
+            searchKeyword(searchBarInputView.text.toString())
+        }
     }
 
     private fun initAdapter() {
@@ -52,6 +69,25 @@ class MainActivity : AppCompatActivity() {
         adapter.setSearchResultList(dataList) {
             Toast.makeText(this, "빌딩이름 : ${it.buildingName} 주소  ${it.fullAdress}", Toast.LENGTH_SHORT).show()
 
+        }
+    }
+    private fun searchKeyword(keywordString: String) {
+        launch(coroutineContext) {
+            try {
+                withContext(Dispatchers.IO){
+                    val response = RetrofitUtil.apiService.getSearchLocation(
+                        keyword = keywordString
+                    )
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        withContext(Dispatchers.Main) {
+
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
         }
     }
 }
