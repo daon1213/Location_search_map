@@ -71,7 +71,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         adapter.setSearchResultList(dataList) {
             Toast.makeText(this, "빌딩이름 : ${it.buildingName} 주소  ${it.fullAdress} 위도/경도 : ${it.locationLatLng}", Toast.LENGTH_SHORT).show()
             startActivity(
-                Intent(this, MapActivity::class.java)
+                Intent(this, MapActivity::class.java).apply {
+                    putExtra(SEARCH_RESULT_EXTRA_KEY, it)
+                }
             )
         }
     }
