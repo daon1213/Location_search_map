@@ -1,5 +1,6 @@
 package com.daon.search_map_part4_03.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +42,11 @@ class SearchRecyclerAdapter: RecyclerView.Adapter<SearchRecyclerAdapter.SearchRe
 
     override fun getItemCount(): Int = searchResultList.size
 
-    fun setSearchResultList(searchResultList: List<SearchResultEntity>,  searResultClickListener: (SearchResultEntity) -> Unit) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun setSearchResultList(searchResultList: List<SearchResultEntity>, searResultClickListener: (SearchResultEntity) -> Unit) {
         this.searchResultList = searchResultList
         this.searResultClickListener = searResultClickListener
+        notifyDataSetChanged()
     }
 
 }
