@@ -5,6 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LocationLatLngEntity(
-    private val latitude: Float,
-    private val longitude: Float
+    val latitude: Float,
+    val longitude: Float
 ): Parcelable
